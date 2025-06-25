@@ -1,3 +1,6 @@
+### 0.0.3
+* Updated documentation.
+
 ### 0.0.2
 * Prevent sliding in a direction when the corresponding slide action is not provided.
 

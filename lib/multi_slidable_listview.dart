@@ -167,6 +167,8 @@ class _MultiSlidableListviewState extends State<MultiSlidableListview>
                 });
               },
               onDragEnd: animateDragEnd,
+              canSwipeLeft: widget.rightSlideAction != null,
+              canSwipeRight: widget.leftSlideAction != null,
               child: isDraggable
                   ? Material(
                       // borderRadius: BorderRadius.horizontal(
@@ -307,6 +309,8 @@ class SlideTile extends StatelessWidget {
     required this.onDragUpdate,
     required this.onDragEnd,
     required this.child,
+    required this.canSwipeLeft,
+    required this.canSwipeRight,
   });
 
   final AnimationController controller;
@@ -315,6 +319,8 @@ class SlideTile extends StatelessWidget {
   final void Function(double delta, double posY, double height) onDragUpdate;
   final VoidCallback onDragEnd;
   final Widget child;
+  final bool canSwipeLeft;
+  final bool canSwipeRight;
 
   @override
   Widget build(BuildContext context) {
@@ -328,11 +334,20 @@ class SlideTile extends StatelessWidget {
           onHorizontalDragUpdate: (details) {
             final height =
                 (context.findRenderObject() as RenderBox?)?.size.height ?? 1;
-            onDragUpdate(
-              details.primaryDelta ?? 0,
-              details.localPosition.dy,
-              height,
-            );
+            final delta = details.primaryDelta ?? 0;
+
+            final newValue = controller.value + delta;
+
+            final isSwipeLeft = delta < 0;
+            final isSwipeRight = delta > 0;
+
+            final allowSwipe =
+                (isSwipeLeft && (canSwipeLeft || newValue > 0)) ||
+                (isSwipeRight && (canSwipeRight || newValue < 0));
+
+            if (allowSwipe) {
+              onDragUpdate(delta, details.localPosition.dy, height);
+            }
           },
           onHorizontalDragEnd: (_) => onDragEnd(),
           child: child,

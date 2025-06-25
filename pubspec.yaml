@@ -1,5 +1,5 @@
 name: multi_slidable_listview
-description: "A cool Flutter package that slides multiple listview items at once."
+description: "A Flutter widget that enables multi-item slide actions in a ListView, allowing users to swipe and dismiss multiple items at once with customizable actions."
 version: 0.0.1
 repository: https://github.com/fadilfadz01/multi_slidable_listview
 

@@ -1,7 +1,7 @@
 name: multi_slidable_listview
 description: "A cool Flutter package that slides multiple listview items at once."
 version: 0.0.1
-repository: 
+repository: https://github.com/fadilfadz01/multi_slidable_listview
 
 environment:
   sdk: ^3.8.1

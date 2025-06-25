@@ -49,6 +49,10 @@ class _MyAppState extends State<MyApp> {
               });
             },
             leftSlideAction: (slidedItemsIndices) {},
+            rightSlideColor: Colors.red,
+            leftSlideColor: Colors.green,
+            rightSlideIcon: Icon(Icons.delete, color: Colors.white, size: 30),
+            leftSlideIcon: Icon(Icons.archive, color: Colors.white, size: 30),
             sliderBorderRadius: 16,
             contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 2),
           ),

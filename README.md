@@ -1,39 +1,65 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# multi_slidable_listview
+A Flutter widget that enables multi-item slide actions in a ListView, allowing users to swipe and dismiss multiple items at once with customizable actions.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+<img src="https://github.com/user-attachments/assets/9256be0f-ad70-4ac5-93b4-d3db2a24b2b7" width="291" height="600" alt="Demo">
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+*❤️ Like this package? Give it a star to show your support!*
 
 ## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+To use this package, add `multi_slidable_listview` as a dependency in your pubspec.yaml file.
 
 ## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
+Example 1:
 ```dart
-const like = 'sample';
+MultiSlidableListview(
+  children: [
+    ListTile(
+      tileColor: Colors.teal.shade300,
+      title: Text('Item 1'),
+      subtitle: Text('Swipe here horizontally'),
+    ),
+    Container(
+      color: Colors.teal.shade300,
+      child: Column(children: [Text('Item 2'), Text('Swipe here horizontally')]),
+    ),
+  ],
+  rightSlideAction: (slidedItemsIndices) {},
+  leftSlideAction: (slidedItemsIndices) {},
+),
 ```
 
-## Additional information
+Example 2:
+```dart
+List<Widget> items = List.generate(
+  20,
+  (index) => ListTile(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    tileColor: Colors.teal.shade300,
+    title: Text('Item $index'),
+    subtitle: Text('Swipe here horizontally'),
+  ),
+);
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+MultiSlidableListview.builder(
+  itemCount: items.length,
+  itemBuilder: (context, index) => items[index],
+  rightSlideAction: (slidedItemsIndices) {
+    setState(() {
+      slidedItemsIndices
+        ..sort((a, b) => b.compareTo(a))
+        ..forEach((index) {
+          if (index >= 0 && index < items.length) {
+            items.removeAt(index);
+          }
+        });
+    });
+  },
+  leftSlideAction: (slidedItemsIndices) {},
+  rightSlideColor: Colors.red,
+  leftSlideColor: Colors.green,
+  rightSlideIcon: Icon(Icons.delete, color: Colors.white, size: 30),
+  leftSlideIcon: Icon(Icons.archive, color: Colors.white, size: 30),
+  sliderBorderRadius: 16,
+  contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 2),
+),
+```
